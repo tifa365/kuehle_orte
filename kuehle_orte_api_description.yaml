@@ -1,0 +1,48 @@
+
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Geoportal Stadt Koeln API"
+  description: "This is the Geoportal Stadt Koeln API that allows you to fetch different types of 'cool places' data. Current options include 'im_gruenen', 'insidertipp', 'im_schatten', 'am_wasser' and 'im_innenraum'."
+servers:
+  - url: "https://geoportal.stadt-koeln.de/wss/service/kuehle_orte_wfs/guest"
+paths:
+  /:
+    get:
+      summary: "Get 'cool places' data"
+      description: "Fetch data for different types of 'cool places'. You can specify the type in the 'typeNames' parameter."
+      parameters:
+        - name: "service"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            example: "WFS"
+        - name: "version"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            example: "2.0.0"
+        - name: "request"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            example: "GetFeature"
+        - name: "srsName"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            example: "EPSG%3A25832"
+        - name: "typeNames"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            enum: ["im_gruenen", "insidertipp", "im_schatten", "am_wasser", "im_innenraum"]
+            example: "im_gruenen"
+      responses:
+        '200':
+          description: "Successful response. Data is returned in the response body."
